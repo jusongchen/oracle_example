@@ -52,15 +52,16 @@ func OpenDB(oraUser, oraPasswd, oraConn string) (*sql.DB, error) {
 	// defer db.Close()
 
 	if err != nil {
-		return nil, errors.Wrapf(err, "connect to oracle %s as user %s fail", oraConn, oraUser)
+		return nil, errors.Wrapf(err, "connect to oracle %s as user %s failed", oraConn, oraUser)
 	}
 
 	//make a SQL query call to make sure the DB server works
 	var n int
 	err = db.QueryRow("select 1 from dual").Scan(&n)
 	if err != nil {
-		return nil, errors.Wrapf(err, "connect to oracle %s as user %s fail", oraUser, oraConn)
+		return nil, errors.Wrapf(err, "connect to oracle %s as user %s failed", oraConn, oraUser)
 	}
+
 	if n != 1 {
 		panic(fmt.Sprintf("OpenDB:`select 1 from dual` fail. Expecting 1 get %d", n))
 	}
